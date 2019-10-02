@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class GearChain : MonoBehaviour
 {
+    public GearMesh proto;
     public GearMesh lastCreated;
     Vector3 newPosition;
+    public float deltaX = 1f;
 
     private static int c = 0;
 
@@ -18,15 +20,9 @@ public class GearChain : MonoBehaviour
 
     void SpawnGear()
     {
-        newPosition.x = newPosition.x + 5;
-        print(string.Format("{0}", ++c));
-        GearMesh l = lastCreated;
-        print(string.Format("lastCreated: {0}", l.ToString()));
-        Gear3D g = l.gearData;
-        print(string.Format("oR: {0}", g.OuterRadius.ToString()));
+        newPosition.x = newPosition.x + deltaX;
         Gear3D last = new Gear3D(lastCreated.gearData);
-        print(string.Format("last: {0}", last.OuterRadius.ToString()));
-        lastCreated = Instantiate<GearMesh>(lastCreated, newPosition, Quaternion.identity);
+        lastCreated = Instantiate<GearMesh>(proto, newPosition, Quaternion.Euler(0, -90, 0));
         lastCreated.SetupGear(ref last);
 
     }

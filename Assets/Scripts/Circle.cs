@@ -17,15 +17,19 @@ public class Circle
 
     public Vector3 Center { get => center; set => center = value; }
     private Vector3 center;
+
     public float Radius { get => radius; set => radius = value; }
     private float radius = DEFAULT_RADIUS;
 
 
     protected int numSpokes = DEFAULT_nUMSPOKES;
 
-    protected List<int> triangleVertIndices;
-    protected List<Vector3> vertices;
-    protected List<Vector3> normals;
+    public List<Vector3> Vertices { get => vertices; protected set => vertices = value; }
+    private List<Vector3> vertices = new List<Vector3>();
+    public List<Vector2> Uv { get => uv; protected set => uv = value; }
+    private List<Vector2> uv = new List<Vector2>();
+    public List<int> TriangleVertIndices { get => triangleVertIndices; protected set => triangleVertIndices = value; }
+    private List<int> triangleVertIndices = new List<int>();
 
 
     public void Generate()
@@ -35,14 +39,13 @@ public class Circle
 
     public void MakeTriangles()
     {
-        vertices.Add(center);
-        normals.Add(new Vector3(1, 0, 0));
+        Vertices.Add(center);
+        Uv.Add(new Vector2(center.x, center.z));
 
         // Iterate through all spokes (NumTeeth*2)
         for (int i = 1; i <= numSpokes; i++)
         {
-            MakeVertices(i);
-            MakeNormals();
+            MakeVerticesAndUV(i);
             MakeTriangleVertexIndices(i);
         };
     }
@@ -63,24 +66,20 @@ public class Circle
 
     protected virtual void AddTri(int a, int b, int c)
     {
-        triangleVertIndices.Add(a);
-        triangleVertIndices.Add(b);
-        triangleVertIndices.Add(c);
+        TriangleVertIndices.Add(a);
+        TriangleVertIndices.Add(b);
+        TriangleVertIndices.Add(c);
     }
 
-    protected virtual void MakeNormals()
-    {
-        normals.Add(new Vector3(1, 0, 0));
-    }
-
-    protected virtual void MakeVertices(int i)
+    protected virtual void MakeVerticesAndUV(int i)
     {
         Vector3 c = center;
         float theta = GetThetaAtIthSpoke(i - 1);
         float cT = Mathf.Cos(theta);
         float sT = Mathf.Sin(theta);
         // Create vertices for front of circle
-        vertices.Add(new Vector3(0 + c.x, Radius * cT + c.y, Radius * sT + c.z));
+        Vertices.Add(new Vector3(0 + c.x, Radius * cT + c.y, Radius * sT + c.z));
+        Uv.Add(new Vector2(c.x, Radius * sT + c.z));
     }
 
     protected float GetEdgeWidthUnit()  {

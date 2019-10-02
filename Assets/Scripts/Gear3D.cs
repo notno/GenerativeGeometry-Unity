@@ -56,29 +56,26 @@ public class Gear3D : Gear
         RotationFactor = rotation;
     }
 
-    new void MakeVertices(int i)
+    protected override void MakeVerticesAndUV(int i)
     {
         float theta = GetThetaAtIthSpoke(i - 1);
         float cT = Mathf.Cos(theta);
         float sT = Mathf.Sin(theta);
 
-        // Create vertices for front of gear
-        vertices.Add(new Vector3(0 + Center.x, Radius * cT, Radius * sT));
-        vertices.Add(new Vector3(0 + Center.x, OuterRadius * cT, OuterRadius * sT));
-        // Create vertices for back of gear
-        vertices.Add(new Vector3(-Depth, OuterRadius * cT, OuterRadius * sT));
-        vertices.Add(new Vector3(-Depth, Radius * cT, Radius * sT));
+        // Create vertices and uv for front of gear
+        Vertices.Add(new Vector3(Center.x, Radius * cT, Radius * sT));
+        Uv.Add(new Vector2(Center.x, Radius * sT));
+        Vertices.Add(new Vector3(Center.x, OuterRadius * cT, OuterRadius * sT));
+        Uv.Add(new Vector2(Center.x, OuterRadius * sT));
+
+        // Create vertices and uv for back of gear
+        Vertices.Add(new Vector3(-Depth, OuterRadius * cT, OuterRadius * sT));
+        Uv.Add(new Vector2(-Depth, OuterRadius * sT));
+        Vertices.Add(new Vector3(-Depth, Radius * cT, Radius * sT));
+        Uv.Add(new Vector2(-Depth, Radius * sT));
     }
 
-    new void MakeNormals()
-    {
-        normals.Add(new Vector3(1, 0, 0));
-        normals.Add(new Vector3(1, 0, 0));
-        normals.Add(new Vector3(1, 0, 0));
-        normals.Add(new Vector3(1, 0, 0));
-    }
-
-    new void MakeTriangleVertexIndices(int i)
+    protected override void MakeTriangleVertexIndices(int i)
     {
         // Storing indices of Vertices for easy use when making triangles
         // Using "even" for even numbered spokes, "odd" for odd spokes
