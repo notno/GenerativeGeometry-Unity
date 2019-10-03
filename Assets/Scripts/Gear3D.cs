@@ -7,10 +7,10 @@ public class Gear3D : Gear
     float depth;
 
     // Copy constructor
-    public Gear3D(Gear3D p) : this(p.Center, p.Radius, p.OuterRadius, p.GetNumTeeth(), p.ToothWidth, p.RotationFactor, p.depth) { }
+    public Gear3D(Gear3D p) : this(p.Center, p.Radius, p.OuterRadius, p.GetNumTeeth(), p.ToothWidth, p.depth) { }
 
-    public Gear3D(Vector3 center, float radius, float oR, int nT, float tW, int rF, float depth) :
-        base(center, radius, oR, nT, tW, rF)
+    public Gear3D(Vector3 center, float radius, float oR, int nT, float tW, float depth) :
+        base(center, radius, oR, nT, tW)
     {
         this.Depth = depth;
         Debug.Assert(radius > 0);
@@ -28,11 +28,10 @@ public class Gear3D : Gear
         Debug.Assert(ToothWidth > 0);
     }
 
-    public Gear3D(Vector3 center, float radius, float toothWidth, float depth, int rotation) :
+    public Gear3D(Vector3 center, float radius, float toothWidth, float depth) :
         base(center, radius, toothWidth)
     {
         this.Depth = depth;
-        RotationFactor = rotation;
     }
 
     protected override void MakeVerticesAndUV(int i)

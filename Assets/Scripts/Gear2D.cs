@@ -3,24 +3,17 @@ using GenerativeGeometry;
 
 public class Gear2D : Gear
 {
-
     public Gear2D(Vector3 center, float radius, int numTeeth) :
-        base(center, radius, numTeeth) { }
-
-
-    public Gear2D(Vector3 center, float radius, int numTeeth, int rotation ) :
         base(center, radius, numTeeth)
     {
-        RotationFactor = rotation;
         Debug.Assert(radius > 0);
         Debug.Assert(OuterRadius >= radius);
     }
 
 
-    public Gear2D(Vector3 center, float radius, float toothWidth, int rotation) :
+    public Gear2D(Vector3 center, float radius, float toothWidth) :
         base(center, radius, toothWidth)
     {
-        RotationFactor = rotation;
         Debug.Assert(radius > 0);
         Debug.Assert(OuterRadius >= radius);
         Debug.Assert(ToothWidth > 0);

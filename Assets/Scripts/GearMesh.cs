@@ -9,7 +9,7 @@ public class GearMesh : MonoBehaviour
     public float radius = 2f;
     public float toothWidth = .1f;
     public float depth;
-    public int rotationFactor = 1;
+    public float rotationFactor = 1f;
 
     public Circle gearData;
     public Material gearMaterial;
@@ -18,8 +18,8 @@ public class GearMesh : MonoBehaviour
     void Start()
     {
         //gearData = new Circle(center, radius, 16);
-        //gearData = new Gear2D(center, radius, toothWidth, rotationFactor);
-        gearData = new Gear3D(center, radius, toothWidth, depth, rotationFactor);
+        //gearData = new Gear2D(center, radius, toothWidth);
+        gearData = new Gear3D(center, radius, toothWidth, depth);
 
         SetupGear();
     }
@@ -56,6 +56,6 @@ public class GearMesh : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.transform.Rotate(rotationFactor,0,0);
+        gameObject.transform.Rotate(rotationFactor, 0,0);
     }
 }

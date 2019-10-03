@@ -12,8 +12,9 @@ public class GearChain : MonoBehaviour
     public float radius = 1f;
     public float toothWidth = .1f;
     public float depth = .3f;
+    public float rotationFactor = 1f;
 
-    List<(Vector3 Center, float Radius, float ToothWidth, int Rotation)> gearSystemData;
+    List<(Vector3 Center, float Radius, float ToothWidth, float RotationFactor)> gearSystemData;
     public List<GearMesh> gearSystem;
 
     void Start()
@@ -24,7 +25,7 @@ public class GearChain : MonoBehaviour
     public void GenerateGearSystem()
     {
         // Reinitialize data list
-        gearSystemData = new List<(Vector3 Center, float Radius, float ToothWidth, int Rotation)>();
+        gearSystemData = new List<(Vector3 Center, float Radius, float ToothWidth, float RotationFactor)>();
         gearSystem = new List<GearMesh>();
         // Clean up scene
         GameObject[] gears= GameObject.FindGameObjectsWithTag("MyGear");
@@ -37,10 +38,10 @@ public class GearChain : MonoBehaviour
         Vector3 newCenter = center;
         float newRadius = radius;
         float newToothWidth = toothWidth;
-        int rotation = 1;
+        float newRotation = 1f;
 
         // Add first gear datum
-        gearSystemData.Add((newCenter, newRadius, newToothWidth, rotation));
+        gearSystemData.Add((newCenter, newRadius, newToothWidth, newRotation * rotationFactor));
 
         int n = NumToGenerate;
         while (n-1 > 0)
@@ -51,8 +52,8 @@ public class GearChain : MonoBehaviour
             float newOuterRadius = distance - newRadius;
             newRadius = Mathf.Abs(newOuterRadius - newToothWidth);
             newCenter.x = newCenter.x + distance;
-            rotation = -rotation;
-            gearSystemData.Add((newCenter, newRadius, newToothWidth, rotation));
+            newRotation = -newRotation;
+            gearSystemData.Add((newCenter, newRadius, newToothWidth, newRotation));
             n--;
         }
 
@@ -62,13 +63,13 @@ public class GearChain : MonoBehaviour
         }
     }
 
-    void SpawnTransform((Vector3 Center, float Radius, float ToothWidth, int Rotation) tup)
+    void SpawnTransform((Vector3 Center, float Radius, float ToothWidth, float RotationFactor) tup)
     {
         GearMesh g = Instantiate<GearMesh>(proto, tup.Center, Quaternion.Euler(0,-90,0));
         g.center = tup.Center;
         g.radius = tup.Radius;
         g.toothWidth = tup.ToothWidth;
-        g.rotationFactor = tup.Rotation;
+        g.rotationFactor = tup.RotationFactor * rotationFactor / (2f * Mathf.PI * tup.Radius);
         g.depth = depth;
         g.tag = "MyGear";
         gearSystem.Add(g);
