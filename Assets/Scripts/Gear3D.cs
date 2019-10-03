@@ -42,16 +42,16 @@ public class Gear3D : Gear
         float sT = Mathf.Sin(theta);
 
         // Create vertices and uv for front of gear
-        Vertices.Add(new Vector3(Center.x, Radius * cT, Radius * sT));
-        Uv.Add(new Vector2(Center.x, Radius * sT));
-        Vertices.Add(new Vector3(Center.x, OuterRadius * cT, OuterRadius * sT));
-        Uv.Add(new Vector2(Center.x, OuterRadius * sT));
+        Vertices.Add(new Vector3(0, Radius * cT, Radius * sT));
+        Uv.Add(new Vector2(0, Radius * sT));
+        Vertices.Add(new Vector3(0, OuterRadius * cT, OuterRadius * sT));
+        Uv.Add(new Vector2(0, OuterRadius * sT));
 
         // Create vertices and uv for back of gear
-        Vertices.Add(new Vector3(-Depth, OuterRadius * cT, OuterRadius * sT));
-        Uv.Add(new Vector2(-Depth, OuterRadius * sT));
-        Vertices.Add(new Vector3(-Depth, Radius * cT, Radius * sT));
-        Uv.Add(new Vector2(-Depth, Radius * sT));
+        Vertices.Add(new Vector3(Depth, OuterRadius * cT, OuterRadius * sT));
+        Uv.Add(new Vector2(Depth, OuterRadius * sT));
+        Vertices.Add(new Vector3(Depth, Radius * cT, Radius * sT));
+        Uv.Add(new Vector2(Depth, Radius * sT));
     }
 
     protected override void MakeTriangleVertexIndices(int i)

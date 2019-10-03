@@ -11,13 +11,16 @@ public class GearMesh : MonoBehaviour
     public float depth;
     public int rotationFactor = 1;
 
-    public Gear3D gearData;
+    public Circle gearData;
     public Material gearMaterial;
 
     // Start is called before the first frame update
     void Start()
     {
-        gearData = new Gear3D(center, radius, toothWidth, .2, rotationFactor);
+        //gearData = new Circle(center, radius, 16);
+        //gearData = new Gear2D(center, radius, toothWidth, rotationFactor);
+        gearData = new Gear3D(center, radius, toothWidth, depth, rotationFactor);
+
         SetupGear();
     }
 
@@ -43,7 +46,7 @@ public class GearMesh : MonoBehaviour
         mesh.RecalculateNormals();
         meshRenderer.sharedMaterial = gearMaterial;
 
-        //mesh.Optimize();
+        mesh.Optimize();
         //mesh.OptimizeIndexBuffers();
         ////mesh.OptimizeReorderVertexBuffer();
         ////mesh.RecalculateBounds();

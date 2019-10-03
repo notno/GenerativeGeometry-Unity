@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Circle
 {
-    protected Circle(Vector3 center, float radius, int edges)
+    public Circle(Vector3 center, float radius, int edges)
     {
         this.center = center;
         this.Radius = radius;
@@ -39,8 +39,8 @@ public class Circle
 
     public void MakeTriangles()
     {
-        Vertices.Add(center);
-        Uv.Add(new Vector2(center.x, center.z));
+        Vertices.Add(new Vector3(0,0,0));
+        Uv.Add(new Vector2(0,0));
 
         // Iterate through all spokes (NumTeeth*2)
         for (int i = 1; i <= numSpokes; i++)

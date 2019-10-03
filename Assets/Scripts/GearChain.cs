@@ -64,11 +64,12 @@ public class GearChain : MonoBehaviour
 
     void SpawnTransform((Vector3 Center, float Radius, float ToothWidth, int Rotation) tup)
     {
-        GearMesh g = Instantiate<GearMesh>(proto, tup.Center, Quaternion.identity);
+        GearMesh g = Instantiate<GearMesh>(proto, tup.Center, Quaternion.Euler(0,-90,0));
         g.center = tup.Center;
         g.radius = tup.Radius;
         g.toothWidth = tup.ToothWidth;
         g.rotationFactor = tup.Rotation;
+        g.depth = depth;
         g.tag = "MyGear";
         gearSystem.Add(g);
 
