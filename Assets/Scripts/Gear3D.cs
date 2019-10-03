@@ -6,27 +6,6 @@ public class Gear3D : Gear
     public float Depth { get => depth; set => depth = value; }
     float depth;
 
-    public static Gear3DFactory Factory;
-
-    public class Gear3DFactory
-    {
-        public Gear3D GearFromPrevious(Vector3 center, ref Gear3D previous) {
-            Debug.Log(string.Format("previous: {0}", previous.OuterRadius.ToString()));
-            float distanceFromPrevious = Math.Distance(center, previous.Center);
-            Debug.Assert(distanceFromPrevious>=previous.Radius);
-            float outerRadius = distanceFromPrevious - previous.Radius;
-            float toothWidth = previous.ToothWidth; // Copy tooth width from last Gear
-            float radius = outerRadius - toothWidth;
-            float diameter = 2.0f * Mathf.PI * radius;
-            int numSpokes = (int)Mathf.Floor(diameter / toothWidth);
-            radius = numSpokes* toothWidth / (2.0f * Mathf.PI); 
-            outerRadius = radius + toothWidth;
-            int numTeeth = numSpokes / 2;
-            int rotationFactor = -previous.RotationFactor;
-            return new Gear3D(center, radius, outerRadius, numTeeth, toothWidth, rotationFactor, previous.Depth);
-        }
-    }
-
     // Copy constructor
     public Gear3D(Gear3D p) : this(p.Center, p.Radius, p.OuterRadius, p.GetNumTeeth(), p.ToothWidth, p.RotationFactor, p.depth) { }
 
@@ -49,8 +28,8 @@ public class Gear3D : Gear
         Debug.Assert(ToothWidth > 0);
     }
 
-    public Gear3D(Vector3 center, float radius, int numTeeth, float depth, int rotation) :
-        base(center, radius, numTeeth)
+    public Gear3D(Vector3 center, float radius, float toothWidth, float depth, int rotation) :
+        base(center, radius, toothWidth)
     {
         this.Depth = depth;
         RotationFactor = rotation;

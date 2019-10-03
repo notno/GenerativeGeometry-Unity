@@ -32,7 +32,7 @@ public class Circle
     private List<int> triangleVertIndices = new List<int>();
 
 
-    public void Generate()
+    public void GenerateVertsAndTris()
     {
         MakeTriangles();
     }

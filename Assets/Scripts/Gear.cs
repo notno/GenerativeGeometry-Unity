@@ -19,6 +19,12 @@ public class Gear : Circle
 		OuterRadius = radius + ToothWidth;
 	}
 
+    public Gear(Vector3 center, float radius, float toothWidth) : base(center, radius, (int)(2.0f*Mathf.PI*radius/toothWidth))
+    {
+        ToothWidth = toothWidth;
+        outerRadius = radius + toothWidth;
+    }
+
     // Constructor that sets everything explicitly
     public Gear(Vector3 center, float radius, float oR, int nT, float tW, int rF) : base(center, radius, nT* 2)
     {
